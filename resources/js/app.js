@@ -5,8 +5,13 @@
  */
 
 require('./bootstrap');
+import VueRouter from 'vue-router'
+import Vuex from 'vuex'
+import 'es6-promise/auto'
 
 window.Vue = require('vue');
+Vue.use(VueRouter)
+Vue.use(Vuex)
 
 /**
  * The following block of code may be used to automatically register your
@@ -19,7 +24,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('user-mgmt', require('./components/users/index.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
