@@ -363,6 +363,7 @@ class ComposerStaticInitb27ca6442cc573e94dc1e53f9d834810
         'App\\Comment' => __DIR__ . '/../..' . '/app/Comment.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\API\\TasksController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/TasksController.php',
         'App\\Http\\Controllers\\API\\UsersController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/UsersController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',

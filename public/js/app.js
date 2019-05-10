@@ -1899,11 +1899,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      userOptions: []
+      userOptions: [],
+      newComment: ''
     };
   },
   mounted: function mounted() {
@@ -1928,7 +1944,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     }
   }),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["saveProp"]), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["saveProp", "postComment"]), {
     toggleComplete: function toggleComplete(e) {
       var _this2 = this;
 
@@ -1940,6 +1956,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function () {
         return _this2.$router.replace("/");
       });
+    },
+    buildComment: function buildComment() {
+      var newComment = {
+        task_id: this.selectedTask.id,
+        body: this.newComment
+      };
+      this.postComment(newComment);
     }
   })
 });
@@ -39768,7 +39791,69 @@ var render = function() {
           0
         )
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c("form", [
+      _c("div", [
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.newComment,
+              expression: "newComment"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { placeholder: "Enter Comment" },
+          domProps: { value: _vm.newComment },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.newComment = $event.target.value
+            }
+          }
+        })
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "button",
+      { staticClass: "btn btn-primary", on: { click: _vm.buildComment } },
+      [_vm._v("Post Comment")]
+    ),
+    _vm._v(" "),
+    _vm.selectedTask.comments && _vm.selectedTask.comments.length
+      ? _c("h3", [_vm._v("Comments")])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.userOptions.length
+      ? _c(
+          "div",
+          _vm._l(_vm.selectedTask.comments || [], function(comment) {
+            return _c("div", { key: comment.id, staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(comment.body) +
+                    " by " +
+                    _vm._s(
+                      _vm.userOptions.find(function(u) {
+                        return u.id === comment.created_by
+                      }).name
+                    ) +
+                    " on " +
+                    _vm._s(new Date(comment.created_at).toLocaleDateString()) +
+                    "\n      "
+                )
+              ])
+            ])
+          }),
+          0
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -56908,6 +56993,19 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
         dispatch('select', task);
         return dispatch('save', task);
       }
+    },
+    postComment: function postComment(_ref10, comment) {
+      var state = _ref10.state,
+          dispatch = _ref10.dispatch;
+      axios.post('/api/v1/comments', comment).then(function (response) {
+        var task = state.tasks.find(function (t) {
+          return t.id === comment.task_id;
+        });
+        task.comments = task.comments || [];
+        task.comments = task.comments.concat([response.data]);
+        dispatch('select', task);
+        dispatch('udpate', task);
+      });
     }
   }
 });

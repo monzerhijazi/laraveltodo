@@ -13,7 +13,8 @@ class Task extends Model
         'due_date',
         'description',
         'created_by',
-        'is_complete'
+        'is_complete',
+        'commments'
     ];
 
     protected $fillable = [
@@ -34,8 +35,8 @@ class Task extends Model
         return $this->belongsTo('App\User', 'assigned_user');
     }
 
-    // public function comments()
-    // {
-    //     return $this->hasMany('App\Comment');
-    // }
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
 }

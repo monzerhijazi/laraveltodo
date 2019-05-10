@@ -24,4 +24,5 @@ Route::group([
 ], function() {
     Route::resource('users', 'UsersController');
     Route::resource('tasks', 'TasksController');
+    Route::resource('comments', 'CommentsController');
 });

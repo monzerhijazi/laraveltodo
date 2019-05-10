@@ -5,11 +5,11 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
-use App\Task;
+use App\Comment;
 use Auth;
 use Illuminate\Support\Facades\Log;
 
-class TasksController extends Controller
+class CommentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,11 +18,7 @@ class TasksController extends Controller
      */
     public function index()
     {
-        $col = Task::all()
-            ->filter(function($value, $key) {
-                return $value->title != null && trim(strlen($value->title)) > 0;
-            });
-        return $col->all();
+        $col = Comment::all();
     }
 
     /**
@@ -33,12 +29,9 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        Log::emergency('System being created!!!!!!');
-        Log::emergency(Auth::user()->id);
         $input = $request->all();
         $input['created_by'] = Auth::user()->id;
-        $input['assigned_user'] = Auth::user()->id;
-        $record = Task::create($input);
+        $record = Comment::create($input);
         return $record;
     }
 
@@ -50,10 +43,8 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-        $record = Task::find($id);
-
-        $attributes = $record->attributesToArray();
-        return array_merge($attributes, ['comments' => $record->comments->toArray()]);;
+        $record = Comment::find($id);
+        return $record;
     }
 
 
@@ -67,7 +58,7 @@ class TasksController extends Controller
     public function update(Request $request, $id)
     {
         $input = $request->all();
-        $record = Task::find($id);
+        $record = Comment::find($id);
         $record->update($input);
         return $record;
     }
