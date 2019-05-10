@@ -23,8 +23,18 @@ Vue.use(Vuex)
 
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
-
+// Register a global custom directive called `v-focus`
+Vue.directive('focus', {
+    // When the bound element is inserted into the DOM...
+    inserted: function (el) {
+        // Focus the element
+        el.focus()
+    }
+});
 Vue.component('user-mgmt', require('./components/users/index.vue').default);
+Vue.component('task-board', require('./components/tasks/index.vue').default);
+Vue.component('task-list-item', require('./components/tasks/TaskListItem.vue').default);
+Vue.component('edit-task', require('./components/tasks/EditTask.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

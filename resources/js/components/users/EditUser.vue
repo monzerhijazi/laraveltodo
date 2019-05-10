@@ -29,7 +29,7 @@
                     </div>
                    
                     </form>
-                    <button class="btn btn-primary" v-on:click="submitUser">Add User</button>
+                    <button class="btn btn-primary" v-on:click="submitUser">Save</button>
                     <button class="btn btn-danger" v-on:click="cancel">Cancel</button>
             </div>
         </div>
