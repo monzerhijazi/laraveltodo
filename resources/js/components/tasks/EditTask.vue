@@ -25,6 +25,21 @@
     </div>
       
     </form>
+    <form>
+        <div>
+          <textarea class="form-control" placeholder="Enter Comment" v-model="newComment" />
+        </div>
+    </form>
+    <button @click="buildComment" class="btn btn-primary">Post Comment</button>
+    
+    <h3 v-if="selectedTask.comments && selectedTask.comments.length">Comments</h3>
+    <div v-if="userOptions.length">
+      <div class="row" v-for="comment in (selectedTask.comments || [])" v-bind:key="comment.id">
+        <div class="col-md-12">
+          {{comment.body}} by {{userOptions.find(u => u.id === comment.created_by).name}} on {{(new Date(comment.created_at)).toLocaleDateString()}}
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -32,7 +47,8 @@ import { mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
-        userOptions: []
+        userOptions: [],
+        newComment: ''
     };
   },
   mounted() {
@@ -53,7 +69,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["saveProp"]),
+    ...mapActions(["saveProp", "postComment"]),
     toggleComplete(e) {
       const isComplete = !this.selectedTask.is_complete;
       this.saveProp({
@@ -61,6 +77,13 @@ export default {
         prop: "is_complete",
         value: isComplete
       }).then(() => this.$router.replace("/"));
+    },
+    buildComment() {
+      const newComment = {
+        task_id: this.selectedTask.id,
+        body: this.newComment
+      };
+      this.postComment(newComment);
     }
   }
 };

@@ -95,6 +95,16 @@ const store = new Vuex.Store({
                 dispatch('select', task);
                 return dispatch('save', task);
             } 
+        },
+        postComment({state, dispatch}, comment) {
+            axios.post('/api/v1/comments', comment)
+                .then(response => {
+                    const task = state.tasks.find(t => t.id === comment.task_id);
+                    task.comments = task.comments || [];
+                    task.comments = task.comments.concat([response.data]);
+                    dispatch('select', task);
+                    dispatch('udpate', task);
+                });
         }
     }
   });
