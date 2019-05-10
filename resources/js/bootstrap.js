@@ -31,6 +31,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 let token = document.head.querySelector('meta[name="csrf-token"]');
 let apiToken = document.head.querySelector('meta[name="api-token"]');
+let userId = document.head.querySelector('meta[name="user-id"]');
 
 if (token) {
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
@@ -41,6 +42,14 @@ if (token) {
 if(apiToken) {
     const c = apiToken.content;
     window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + c;
+}
+
+if(userId) {
+    window.user = {id: Number(userId.content)};
+    axios.get('/api/v1/users/' + userId.content)
+        .then(response => {
+            window.user = response.data;
+        });
 }
 
 /**

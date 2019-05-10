@@ -20,7 +20,7 @@ export default {
             'saveProp'
         ]),
         toggleComplete(e) {
-            const isComplete = e.target.value === 'on';
+            const isComplete = !this.selectedTask.is_complete;
             this.saveProp({id: this.selectedTask.id, prop: 'is_complete', value: isComplete})
                 .then(() => this.$router.replace('/'));
         }

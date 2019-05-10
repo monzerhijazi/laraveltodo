@@ -9,6 +9,7 @@
 
     @if(Auth::check())
         <meta name="api-token" content="{{ Auth::user()->api_token }}">
+        <meta name="user-id" content="{{ Auth::user()->id }}">
     @endif
     
     <title>{{ config('app.name', 'Laravel') }}</title>

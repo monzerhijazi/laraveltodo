@@ -8,8 +8,29 @@
                     <a>All Tasks</a>
                 </router-link>
             </ul>
-            <div>
-                
+            <div class="report-card">
+                <div class="count">
+                    {{assignedToMeCountInComplete}}
+                </div>
+                <div class="description">
+                    Open Tasks Assigned To Me
+                </div>
+            </div>
+             <div class="report-card">
+                <div class="count">
+                    {{totalCountInComplete}}
+                </div>
+                <div class="description">
+                    Total Open Tasks
+                </div>
+            </div>
+            <div class="report-card">
+                <div class="count">
+                    {{totalCountComplete}}
+                </div>
+                <div class="description">
+                    Total Completed Tasks
+                </div>
             </div>
         </nav>
 
@@ -25,6 +46,7 @@
     import store from '../../stores/tasks';
     store.dispatch('init');
     import BoardView from './Board';
+    import { mapActions, mapState, mapGetters } from 'vuex';
     const routes = [
         {path: '/', component: BoardView},
         {path: '/tasks/:id', component: BoardView},
@@ -36,9 +58,11 @@
         store,
         router,
         computed: {
-            showingMine() {
-                const routerPath = this.$router;
-            }
+            ...mapGetters([
+                'assignedToMeCountInComplete',
+                'totalCountInComplete',
+                'totalCountComplete'
+            ])
         }
     }
 </script>
@@ -85,6 +109,15 @@
             }
             &.router-link-active {
               background-color: rgba(255,255,255,.16);  
+            }
+        }
+
+        .report-card {
+            div {
+                text-align: center;
+            }
+            .count {
+                font-size: 32px;
             }
         }
         color: white;

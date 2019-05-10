@@ -1932,7 +1932,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     toggleComplete: function toggleComplete(e) {
       var _this2 = this;
 
-      var isComplete = e.target.value === "on";
+      var isComplete = !this.selectedTask.is_complete;
       this.saveProp({
         id: this.selectedTask.id,
         prop: "is_complete",
@@ -1976,7 +1976,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     toggleComplete: function toggleComplete(e) {
       var _this = this;
 
-      var isComplete = e.target.value === 'on';
+      var isComplete = !this.selectedTask.is_complete;
       this.saveProp({
         id: this.selectedTask.id,
         prop: 'is_complete',
@@ -2002,6 +2002,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _stores_tasks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/tasks */ "./resources/js/stores/tasks.js");
 /* harmony import */ var _Board__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Board */ "./resources/js/components/tasks/Board.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2028,6 +2054,7 @@ __webpack_require__.r(__webpack_exports__);
 
 _stores_tasks__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('init');
 
+
 var routes = [{
   path: '/',
   component: _Board__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -2042,11 +2069,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
 /* harmony default export */ __webpack_exports__["default"] = ({
   store: _stores_tasks__WEBPACK_IMPORTED_MODULE_1__["default"],
   router: router,
-  computed: {
-    showingMine: function showingMine() {
-      var routerPath = this.$router;
-    }
-  }
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])(['assignedToMeCountInComplete', 'totalCountInComplete', 'totalCountComplete']))
 });
 
 /***/ }),
@@ -6754,7 +6777,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".wrapper {\n  display: flex;\n  align-items: stretch;\n}\n#sidebar.active {\n  margin-left: -250px;\n}\nhtml {\n  height: 100%;\n}\nbody, #app, main, main > .wrapper {\n  min-height: 100%;\n  height: 100%;\n}\n#content {\n  width: 100%;\n}\n#sidebar {\n  min-width: 250px;\n  max-width: 250px;\n  background-color: #151b26;\n  margin-top: -1.5rem;\n  padding-top: 1.5rem;\n  color: white;\n}\n#sidebar h3 {\n  padding-left: 10px;\n}\n#sidebar .list-group-item {\n  border: none;\n  background-color: #151b26;\n}\n#sidebar .list-group-item a {\n  color: white;\n}\n#sidebar .list-group-item.router-link-active {\n  background-color: rgba(255, 255, 255, 0.16);\n}", ""]);
+exports.push([module.i, ".wrapper {\n  display: flex;\n  align-items: stretch;\n}\n#sidebar.active {\n  margin-left: -250px;\n}\nhtml {\n  height: 100%;\n}\nbody, #app, main, main > .wrapper {\n  min-height: 100%;\n  height: 100%;\n}\n#content {\n  width: 100%;\n}\n#sidebar {\n  min-width: 250px;\n  max-width: 250px;\n  background-color: #151b26;\n  margin-top: -1.5rem;\n  padding-top: 1.5rem;\n  color: white;\n}\n#sidebar h3 {\n  padding-left: 10px;\n}\n#sidebar .list-group-item {\n  border: none;\n  background-color: #151b26;\n}\n#sidebar .list-group-item a {\n  color: white;\n}\n#sidebar .list-group-item.router-link-active {\n  background-color: rgba(255, 255, 255, 0.16);\n}\n#sidebar .report-card div {\n  text-align: center;\n}\n#sidebar .report-card .count {\n  font-size: 32px;\n}", ""]);
 
 // exports
 
@@ -39678,7 +39701,20 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _vm._m(0),
+      _c("div", { staticClass: "form-check" }, [
+        _c("input", {
+          staticClass: "form-check-input",
+          attrs: { type: "checkbox", id: "isComplete" },
+          domProps: { checked: _vm.selectedTask.is_complete },
+          on: { change: _vm.toggleComplete }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          { staticClass: "form-check-label", attrs: { for: "isComplete" } },
+          [_vm._v("Is Complete")]
+        )
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [
         _c("label", { attrs: { for: "assignedTo" } }, [_vm._v("Assigned To")]),
@@ -39735,25 +39771,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-check" }, [
-      _c("input", {
-        staticClass: "form-check-input",
-        attrs: { type: "checkbox", id: "isComplete" }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        { staticClass: "form-check-label", attrs: { for: "isComplete" } },
-        [_vm._v("Is Complete")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -39837,7 +39855,47 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div")
+      _c("div", { staticClass: "report-card" }, [
+        _c("div", { staticClass: "count" }, [
+          _vm._v(
+            "\n                " +
+              _vm._s(_vm.assignedToMeCountInComplete) +
+              "\n            "
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "description" }, [
+          _vm._v("\n                Open Tasks Assigned To Me\n            ")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "report-card" }, [
+        _c("div", { staticClass: "count" }, [
+          _vm._v(
+            "\n                " +
+              _vm._s(_vm.totalCountInComplete) +
+              "\n            "
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "description" }, [
+          _vm._v("\n                Total Open Tasks\n            ")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "report-card" }, [
+        _c("div", { staticClass: "count" }, [
+          _vm._v(
+            "\n                " +
+              _vm._s(_vm.totalCountComplete) +
+              "\n            "
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "description" }, [
+          _vm._v("\n                Total Completed Tasks\n            ")
+        ])
+      ])
     ]),
     _vm._v(" "),
     _c("div", { attrs: { id: "content" } }, [_c("router-view")], 1)
@@ -56144,6 +56202,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 var token = document.head.querySelector('meta[name="csrf-token"]');
 var apiToken = document.head.querySelector('meta[name="api-token"]');
+var userId = document.head.querySelector('meta[name="user-id"]');
 
 if (token) {
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
@@ -56154,6 +56213,15 @@ if (token) {
 if (apiToken) {
   var c = apiToken.content;
   window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + c;
+}
+
+if (userId) {
+  window.user = {
+    id: Number(userId.content)
+  };
+  axios.get('/api/v1/users/' + userId.content).then(function (response) {
+    window.user = response.data;
+  });
 }
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -56736,6 +56804,23 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
         return t.is_complete == false || showComplete;
       });
       return filteredTasks;
+    },
+    assignedToMeCountInComplete: function assignedToMeCountInComplete(state) {
+      var tasks = state.tasks;
+      var filteredTasks = tasks.filter(function (t) {
+        return t.assigned_user === window.user.id && t.is_complete == false;
+      });
+      return filteredTasks.length;
+    },
+    totalCountInComplete: function totalCountInComplete(state) {
+      var tasks = state.tasks;
+      var filteredTasks = tasks.filter(function (t) {
+        return t.is_complete == false;
+      });
+      return filteredTasks.length;
+    },
+    totalCountComplete: function totalCountComplete(state, getters) {
+      return state.tasks.length - getters.totalCountInComplete;
     }
   },
   mutations: {

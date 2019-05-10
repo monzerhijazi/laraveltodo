@@ -11,7 +11,7 @@
         >
 
       <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="isComplete">
+        <input type="checkbox" class="form-check-input" id="isComplete" :checked="selectedTask.is_complete" @change="toggleComplete">
         <label class="form-check-label" for="isComplete">Is Complete</label>
       </div>
 
@@ -55,7 +55,7 @@ export default {
   methods: {
     ...mapActions(["saveProp"]),
     toggleComplete(e) {
-      const isComplete = e.target.value === "on";
+      const isComplete = !this.selectedTask.is_complete;
       this.saveProp({
         id: this.selectedTask.id,
         prop: "is_complete",

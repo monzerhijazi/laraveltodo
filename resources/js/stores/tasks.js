@@ -12,6 +12,19 @@ const store = new Vuex.Store({
             const tasks = state.tasks;
             const filteredTasks = tasks.filter(t => t.is_complete == false || showComplete);
             return filteredTasks;
+        },
+        assignedToMeCountInComplete(state) {
+            const tasks = state.tasks;
+            const filteredTasks = tasks.filter(t => t.assigned_user === window.user.id && t.is_complete == false);
+            return filteredTasks.length;
+        },
+        totalCountInComplete(state) {
+            const tasks = state.tasks;
+            const filteredTasks = tasks.filter(t => t.is_complete == false);
+            return filteredTasks.length;
+        },
+        totalCountComplete(state, getters) {
+            return state.tasks.length - getters.totalCountInComplete;
         }
     },
     mutations: {
