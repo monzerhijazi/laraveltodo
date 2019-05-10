@@ -10,3 +10,7 @@ To run app:
 ## create DB using dbdump/Dump20190510.sql (you can also use ```php artisan migrate``` if you want to start fresh) 
 ## npm install (optional as I've committed built JS/CSS)
 ## Point apache to /public directory of code repository
+
+Login info to DB backup:
+username: monzer ...at... exequt.com (should be written like normal email just writing this way to avoid email being spammed :)
+password: password
